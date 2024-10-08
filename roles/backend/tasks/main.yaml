@@ -44,6 +44,18 @@
     - cryptography
     executable: pip3.9
 
+- name: Ensure root user has proper access
+  community.mysql.mysql_user:
+    name: root
+    host: '10.0.11.236'  # '%' for all hosts
+    password: "ExpenseApp1"
+    priv: "*.*:ALL,GRANT"
+    state: present
+    login_user: root
+    login_password: "ExpenseApp1"
+    login_host: localhost
+    check_implicit_admin: yes
+
 - name: import mysql data
   community.mysql.mysql_db:
     login_user: root
