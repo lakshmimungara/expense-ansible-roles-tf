@@ -44,18 +44,23 @@
     - cryptography
     executable: pip3.9
 
-- name: import mysql data
-  community.mysql.mysql_db:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    login_host: "{{ login_host }}"
-    target: /app/schema/backend.sql
-    name: all
-    state: import
-  rescue:
-    - name: log failure message
-      ansible.builtin.debug:
-        msg: "MySQL import failed."
+# - name: import mysql data
+#   community.mysql.mysql_db:
+#     login_user: root
+#     login_password: "{{ mysql_root_password }}"
+#     login_host: "{{ login_host }}"
+#     target: /app/schema/backend.sql
+#     name: all
+#     state: import
+#   rescue:
+#     - name: log failure message
+#       ansible.builtin.debug:
+#         msg: "MySQL import failed."
+
+- name: import mysql data using command
+  ansible.builtin.command: >
+    mysql -u root -p{{ mysql_root_password }} -h {{ login_host }} < /app/schema/backend.sql
+
 
 - name: daemon reload
   tags:
