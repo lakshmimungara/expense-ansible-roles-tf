@@ -52,6 +52,10 @@
     target: /app/schema/backend.sql
     name: all
     state: import
+  rescue:
+    - name: log failure message
+      ansible.builtin.debug:
+        msg: "MySQL import failed."
 
 - name: daemon reload
   tags:
