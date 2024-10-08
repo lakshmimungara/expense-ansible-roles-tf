@@ -57,9 +57,11 @@
 #       ansible.builtin.debug:
 #         msg: "MySQL import failed."
 
-- name: import mysql data using command
-  ansible.builtin.command: >
-    mysql -u root -p{{ mysql_root_password }} -h {{ login_host }} < /app/schema/backend.sql
+- name: Load MySQL schema
+  shell: mysql -u root -pExpenseApp1 -h mysql-dev.daws81s.fun < /app/schema/backend.sql
+  args:
+    executable: /bin/bash
+
 
 
 - name: daemon reload
